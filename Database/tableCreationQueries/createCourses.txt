@@ -1,7 +1,0 @@
-CREATE TABLE IF NOT EXISTS Courses(
-    deptID VARCHAR(16),
-    crseID INT,
-    crseName VARCHAR(128) NOT NULL,
-    numCredit INT NOT NULL,
-    PRIMARY KEY(deptID, crseID)
-);
