@@ -117,9 +117,9 @@
               <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Break</button>
             </div>
             <div class="card-body">
-              <ul class="list-unstyled mt-3 mb-4">
+              <ul class="list-unstyled mt-3 mb-4" id="breakList">
                 <li>
-  
+				
                 </li>
                 <li>
   
@@ -233,7 +233,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="exampleFormControlSelect2">
                             <option>00</option>
                             <option>15</option>
                             <option>30</option>
@@ -241,7 +241,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="exampleFormControlSelect3">
                             <option>AM</option>
                             <option>PM</option>
                             
@@ -253,7 +253,7 @@
                             <label for="exampleFormControlInput1">End Time</label>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="exampleFormControlSelect4">
                             <option>6</option>
                             <option>7</option>
                             <option>8</option>
@@ -272,7 +272,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="exampleFormControlSelect5">
                             <option>00</option>
                             <option>15</option>
                             <option>30</option>
@@ -280,7 +280,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="exampleFormControlSelect6">
                             <option>AM</option>
                             <option>PM</option>
                             
@@ -292,7 +292,7 @@
                           <label for="exampleFormControlInput1">Day</label>
                         </div>
                         <div class="col-sm-9">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="exampleFormControlSelect7">
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -308,7 +308,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-primary" onclick = "breakSubmit()">Submit</button>
             </div>
           </div>
         </div>
@@ -337,5 +337,6 @@
         text: 'Thumbnail'
       });
     </script>
+	<script src="Scripts.js"></script>
   </body>
 </html>
