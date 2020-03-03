@@ -1,6 +1,6 @@
 <html>
   <body>
-    <form action="csvImport.php" method="post" enctype="multipart/form-data">
+    <form action="csvUpload.php" method="post" enctype="multipart/form-data">
       Select csv file to upload:
       <input type="file" name="csvFile" id="csvFile"><br>
       Enter database credentials:<br>
@@ -30,11 +30,11 @@
       // delete existing tables
       $sql = "
           DROP TABLES IF EXISTS
-              ArrangedInstructors,
               CsvData,
-              InClassInstructors,
-              InClassSessions,
-              Sections;";
+              Sections,
+              ArrangedInstructors,
+              Sessions,
+              SessionInstructors;";
 
       // run query
       if (!$conn->query($sql)) {
@@ -75,60 +75,59 @@
               FOREIGN KEY(deptID, crseID, secID)
               REFERENCES Sections(deptID, crseID, secID)
           );
-          CREATE TABLE IF NOT EXISTS InClassSessions(
+          CREATE TABLE IF NOT EXISTS Sessions(
               deptID VARCHAR(16),
               crseID INT,
               secID VARCHAR(16),
               dayID CHAR(1),
-              timeFrm TIME,
-              timeTo TIME,
-              rmAbbrv VARCHAR(16) NOT NULL,
+              strtTime TIME,
+              endTime TIME,
+              bldgID VARCHAR(16) NOT NULL,
+              rmNum VARCHAR(32) NOT NULL,
               PRIMARY KEY(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo
+                  strtTime,
+                  endTime
               ),
               FOREIGN KEY(deptID, crseID, secID)
               REFERENCES Sections(deptID, crseID, secID)
           );
-          CREATE TABLE IF NOT EXISTS InClassInstructors(
+          CREATE TABLE IF NOT EXISTS SessionInstructors(
               deptID VARCHAR(16),
               crseID INT,
               secID VARCHAR(16),
               dayID CHAR(1),
-              timeFrm TIME,
-              timeTo TIME,
+              strtTime TIME,
+              endTime TIME,
               instrLName VARCHAR(32),
               instrFName VARCHAR(32),
-              rmNum VARCHAR(32),
               PRIMARY KEY(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo,
+                  strtTime,
+                  endTime,
                   instrLName,
-                  instrFName,
-                  rmNum
+                  instrFName
               ),
               FOREIGN KEY(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo
-              ) REFERENCES InClassSessions(
+                  strtTime,
+                  endTime
+              ) REFERENCES Sessions(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo
+                  strtTime,
+                  endTime
               )
           );";
 
@@ -156,17 +155,17 @@
               strtDate DATE not null,
               endDate DATE not null,
               offrDays1 VARCHAR(8),
-              timeFrm1 TIME,
-              timeTo1 TIME,
+              strtTime1 TIME,
+              endTime1 TIME,
               instrName1 VARCHAR(64) not null,
-              rmAbbrv1 VARCHAR(16),
+              bldgID1 VARCHAR(16),
               rmNum1 VARCHAR(32),
               campus1 VARCHAR(32) not null,
               offrDays2 VARCHAR(8),
-              timeFrm2 TIME,
-              timeTo2 TIME,
+              strtTime2 TIME,
+              endTime2 TIME,
               instrName2 VARCHAR(64),
-              rmAbbrv2 VARCHAR(16),
+              bldgID2 VARCHAR(16),
               rmNum2 VARCHAR(32),
               campus2 VARCHAR(32),
               primary key(deptID, crseID, secID)
@@ -209,17 +208,17 @@
                   @strtDate,
                   @endDate,
                   offrDays1,
-                  @timeFrm1,
-                  @timeTo1,
+                  @strtTime1,
+                  @endTime1,
                   instrName1,
-                  rmAbbrv1,
+                  bldgID1,
                   rmNum1,
                   campus1,
                   offrDays2,
-                  @timeFrm2,
-                  @timeTo2,
+                  @strtTime2,
+                  @endTime2,
                   instrName2,
-                  rmAbbrv2,
+                  bldgID2,
                   rmNum2,
                   campus2
               )
@@ -232,10 +231,10 @@
                   STR_TO_DATE(@endDate, '%m/%d/%Y'),
                   '%Y-%m-%d'
               ),
-              timeFrm1 = STR_TO_DATE(@timeFrm1, '%l:%i%p'),
-              timeTo1 = STR_TO_DATE(@timeTo1, '%l:%i%p'),
-              timeFrm2 = STR_TO_DATE(@timeFrm2, '%l:%i%p'),
-              timeTo2 = STR_TO_DATE(@timeTo2, '%l:%i%p');";
+              strtTime1 = STR_TO_DATE(@strtTime1, '%l:%i%p'),
+              endTime1 = STR_TO_DATE(@endTime1, '%l:%i%p'),
+              strtTime2 = STR_TO_DATE(@strtTime2, '%l:%i%p'),
+              endTime2 = STR_TO_DATE(@endTime2, '%l:%i%p');";
 
       // run query
       if (!$conn->query($sql)) {
@@ -267,27 +266,27 @@
 
       // insert data from temporary table into sections table
       $sql = "
-      INSERT INTO Sections(
-          deptID,
-          crseID,
-          secID,
-          crseName,
-          numCredit,
-          strtDate,
-          endDate,
-          campus
-      )
-      SELECT
-          deptID,
-          crseID,
-          secID,
-          crseName,
-          numCredit,
-          strtDate,
-          endDate,
-          campus1
-      FROM
-          CsvData;";
+          INSERT INTO Sections(
+              deptID,
+              crseID,
+              secID,
+              crseName,
+              numCredit,
+              strtDate,
+              endDate,
+              campus
+          )
+          SELECT
+              deptID,
+              crseID,
+              secID,
+              crseName,
+              numCredit,
+              strtDate,
+              endDate,
+              campus1
+          FROM
+              CsvData;";
 
       // run query
       if (!$conn->query($sql)) {
@@ -301,12 +300,12 @@
 
       // sort sections table
       $sql = "
-      ALTER TABLE
-          Sections
-      ORDER BY
-          deptID,
-          crseID,
-          secID ASC;";
+          ALTER TABLE
+              Sections
+          ORDER BY
+              deptID,
+              crseID,
+              secID ASC;";
 
       // insert data from temporary table into arranged instructors table
       $sql = "
@@ -403,23 +402,25 @@
       while($row = $result->fetch_assoc()) {
         for ($i = 0; $i < strlen($row['offrDays1']); ++$i) {
           $sql = "
-              INSERT INTO InClassSessions(
+              INSERT INTO Sessions(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo,
-                  rmAbbrv
+                  strtTime,
+                  endTime,
+                  bldgID,
+                  rmNum
               )
               SELECT
                   deptID,
                   crseID,
                   secID,
                   '" . substr($row['offrDays1'], $i, 1) . "',
-                  timeFrm1,
-                  timeTo1,
-                  rmAbbrv1
+                  strtTime1,
+                  endTime1,
+                  bldgID1,
+                  rmNum1
               FROM
                   CsvData
               WHERE
@@ -454,10 +455,9 @@
           WHERE
               offrDays1 != 'ARR' AND
               offrDays2 != '' AND(
-                  offrDays1 != offrDays2 OR(
-                      timeFrm1 != timeFrm2 AND
-                      timeTo1 != timeTo2
-                  )
+                  offrDays1 != offrDays2 OR
+                  strtTime1 != strtTime2 OR
+                  endTime1 != endTime2
               );";
 
       // run query
@@ -475,23 +475,25 @@
       while($row = $result->fetch_assoc()) {
         for ($i = 0; $i < strlen($row['offrDays2']); ++$i) {
           $sql = "
-              INSERT INTO InClassSessions(
+              INSERT INTO Sessions(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo,
-                  rmAbbrv
+                  strtTime,
+                  endTime,
+                  bldgID,
+                  rmNum
               )
               SELECT
                   deptID,
                   crseID,
                   secID,
                   '" . substr($row['offrDays2'], $i, 1) . "',
-                  timeFrm2,
-                  timeTo2,
-                  rmAbbrv2
+                  strtTime2,
+                  endTime2,
+                  bldgID2,
+                  rmNum2
               FROM
                   CsvData
               WHERE
@@ -517,14 +519,14 @@
       // sort in class session table
       $sql = "
           ALTER TABLE
-              InClassSessions
+              Sessions
           ORDER BY
               deptID,
               crseID,
               secID,
               dayID,
-              timeFrm,
-              timeTo ASC;";
+              strtTime,
+              endTime ASC;";
 
       // run query
       if (!$conn->query($sql)) {
@@ -564,27 +566,25 @@
       while($row = $result->fetch_assoc()) {
         for ($i = 0; $i < strlen($row['offrDays1']); ++$i) {
           $sql = "
-              INSERT INTO InClassInstructors(
+              INSERT INTO SessionInstructors(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo,
+                  strtTime,
+                  endTime,
                   instrLName,
-                  instrFName,
-                  rmNum
+                  instrFName
               )
               SELECT
                   deptID,
                   crseID,
                   secID,
                   '" . substr($row['offrDays1'], $i, 1) . "',
-                  timeFrm1,
-                  timeTo1,
+                  strtTime1,
+                  endTime1,
                   SUBSTRING_INDEX(instrName1, ' ', 1),
-                  SUBSTRING_INDEX(instrName1, ' ', -1),
-                  rmNum1
+                  SUBSTRING_INDEX(instrName1, ' ', -1)
               FROM
                   CsvData
               WHERE
@@ -622,10 +622,9 @@
               offrDays2 != '' AND
               instrName2 != '' AND(
                   offrDays1 != offrDays2 OR
-                  timefrm1 != timefrm2 OR
-                  timeto1 != timeto2 OR
-                  instrName1 != instrName2 OR
-                  rmNum1 != rmNum2
+                  strtTime1 != strtTime2 OR
+                  endTime1 != endTime2 OR
+                  instrName1 != instrName2
               );";
 
       // run query
@@ -643,27 +642,25 @@
       while($row = $result->fetch_assoc()) {
         for ($i = 0; $i < strlen($row['offrDays2']); ++$i) {
           $sql = "
-              INSERT INTO InClassInstructors(
+              INSERT INTO SessionInstructors(
                   deptID,
                   crseID,
                   secID,
                   dayID,
-                  timeFrm,
-                  timeTo,
+                  strtTime,
+                  endTime,
                   instrLName,
-                  instrFName,
-                  rmNum
+                  instrFName
               )
               SELECT
                   deptID,
                   crseID,
                   secID,
                   '" . substr($row['offrDays2'], $i, 1) . "',
-                  timeFrm2,
-                  timeTo2,
+                  strtTime2,
+                  endTime2,
                   SUBSTRING_INDEX(instrName2, ' ', 1),
-                  SUBSTRING_INDEX(instrName2, ' ', -1),
-                  rmNum2
+                  SUBSTRING_INDEX(instrName2, ' ', -1)
               FROM
                   CsvData
               WHERE
@@ -689,17 +686,16 @@
       // sort in class instructors table
       $sql = "
           ALTER TABLE
-              InClassInstructors
+              SessionInstructors
           ORDER BY
               deptID,
               crseID,
               secID,
               dayID,
-              timeFrm,
-              timeTo,
+              strtTime,
+              endTime,
               instrLName,
-              instrFName,
-              rmNum ASC";
+              instrFName ASC";
 
       // run query
       if (!$conn->query($sql)) {
@@ -725,7 +721,7 @@
       }
 
       // display success
-      echo "Data from " . $_FILES["csvFile"]["name"] . " added successfully.";
+      echo "Success: data from " . $_FILES["csvFile"]["name"] . " uploaded.";
 
       // close connection
       $conn->close();
