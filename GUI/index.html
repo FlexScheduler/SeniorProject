@@ -130,7 +130,7 @@
           <div class="card mb-2 box-shadow">
             <div class="card-header">
               <h4 class="my-0 font-weight-normal">Breaks</h4>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Break</button>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#breakModal">Add Break</button>
             </div>
             <div class="card-body">
               <ul class="list-unstyled mt-3 mb-4" id="breakList">
@@ -204,11 +204,11 @@
       </div>
 
       <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="breakModal" tabindex="-1" role="dialog" aria-labelledby="breakModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Break</h5>
+              <h5 class="modal-title" id="breakModalLabel">Add Break</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -219,18 +219,18 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-sm-3">
-                          <label for="exampleFormControlInput1">Break Name</label>
+                          <label for="breakName">Break Name</label>
                         </div>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="exampleFormControlInput1">
+                          <input type="text" class="form-control" id="breakName">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-sm-3">
-                            <label for="exampleFormControlInput1">Start Time</label>
+                            <label for="breakName">Start Time</label>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
+                          <select class="form-control" id="startHour">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -246,7 +246,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect2">
+                          <select class="form-control" id="startMinute">
                             <option>00</option>
                             <option>15</option>
                             <option>30</option>
@@ -254,7 +254,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect3">
+                          <select class="form-control" id="startPeriod">
                             <option>AM</option>
                             <option>PM</option>
 
@@ -263,10 +263,10 @@
                       </div>
                       <div class="row">
                         <div class="col-sm-3">
-                            <label for="exampleFormControlInput1">End Time</label>
+                            <label for="breakName">End Time</label>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect4">
+                          <select class="form-control" id="endHour">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -282,7 +282,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect5">
+                          <select class="form-control" id="endMinute">
                             <option>00</option>
                             <option>15</option>
                             <option>30</option>
@@ -290,7 +290,7 @@
                           </select>
                         </div>
                         <div class="col-sm-3">
-                          <select class="form-control" id="exampleFormControlSelect6">
+                          <select class="form-control" id="endPeriod">
                             <option>AM</option>
                             <option>PM</option>
 
@@ -299,10 +299,10 @@
                       </div>
                       <div class="row">
                         <div class="col-sm-3">
-                          <label for="exampleFormControlInput1">Day</label>
+                          <label for="breakName">Day</label>
                         </div>
                         <div class="col-sm-9">
-                          <select class="form-control" id="exampleFormControlSelect7">
+                          <select class="form-control" id="breakDay">
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
