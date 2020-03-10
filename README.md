@@ -1,6 +1,6 @@
 # Flex Scheduler
 
-This application aims to help students create better. An administrator can upload the course catalog to be used by the application.
+This application aims to help students create better and more flexible schedules. An administrator can upload the course catalog to be used by the application.
 
 ## Getting Started
 
