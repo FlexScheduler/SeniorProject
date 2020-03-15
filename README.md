@@ -4,7 +4,7 @@ This application aims to help students create better and more flexible schedules
 
 ## Getting Started
 
-To test this application locally install XAMPP on your personal machine and run the [Home Page](Application/index.html) file. To import course catalog data, log in as an administrator and follow the upload prompts.
+To test this application locally install [XAMPP](https://www.apachefriends.org/download.html) on your personal machine and run the [Home Page](Application/index.html) file. To import course catalog data, log in as an administrator and follow the upload prompts.
 
 ## Built With
 
