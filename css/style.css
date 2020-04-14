@@ -1,0 +1,112 @@
+/*-- Body --*/
+body {
+  height: 100%;
+  width: 100%;
+  padding-top: 1.5em;
+  font-family: Roboto;
+  font-size: 1em;
+  color: #222;
+  background-color: #f7f4d3;
+}
+
+/*-- Buttons --*/
+.btn-primary {
+  background-color: #343a40;
+  border: 1px solid #343a40;
+}
+
+.btn-primary:hover {
+  background-color: #d5d5d5;
+  border: 1px solid #d5d5d5;
+}
+
+/*-- Padding --*/
+.padding {
+  padding-bottom: 1.25rem;
+}
+
+/*-- Navbar --*/
+.navbar {
+  margin-bottom: 3em;
+}
+
+.navbar-brand img {
+  height: 50px;
+}
+
+.navbar-nav a {
+  font-size: 1.2em;
+}
+
+.social a {
+  padding-left: 0.6em;
+  padding-right: 0.2em;
+  font-size: 1.8em;
+}
+
+.fa-twitter {
+  color: #00aced;
+}
+
+.fa-instagram {
+  color: #517fa4;
+}
+
+.fa-facebook {
+  color: #3b5998;
+}
+
+.fa-youtube {
+  color: #bb0000;
+}
+
+.fa-linkedin-in {
+  color: #007bb6;
+}
+
+.fa-twitter:hover,
+.fa-instagram:hover,
+.fa-facebook:hover,
+.fa-youtube:hover,
+.fa-linkedin:hover {
+  color: #d5d5d5;
+}
+
+/*-- Welcome banner --*/
+.welcome {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+.display-4 {
+  font-size: 300%;
+}
+
+.welcome hr {
+  border-top: 2px solid #343a40;
+  width: 95%;
+}
+
+/*-- Time Inputs --*/
+.time-input {
+  margin-right: 0.5em;
+}
+
+/*-- Footer --*/
+footer {
+  background-color: #343a40;
+  color: #f1ffff;
+  padding-top: 2rem;
+  font-size: 90%;
+}
+
+.footer-style a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+hr.light {
+  border-top: 1px solid #d5d5d5;
+  width: 75%;
+}
