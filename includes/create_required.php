@@ -10,10 +10,10 @@ function create_required($conn)
                 secID VARCHAR(16),
                 crseName VARCHAR(128) NOT NULL,
                 numCredit int NOT NULL,
-                strtDate DATE NOT NULL,
-                endDate DATE NOT NULL,
+                strtDate DATE,
+                endDate DATE,
                 campus VARCHAR(32) NOT NULL,
-                PRIMARY KEY(deptID, crseID, secID)
+                PRIMARY KEY(deptID, crseID, secID, strtDate, endDate)
             )
             ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
     $result = execute_query($conn, $sql);
